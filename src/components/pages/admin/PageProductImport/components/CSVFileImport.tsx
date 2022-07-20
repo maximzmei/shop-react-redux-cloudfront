@@ -42,6 +42,7 @@ export default function CSVFileImport({url, title}: CSVFileImportProps) {
   const uploadFile = async (e: any) => {
     try {
       // Get the presigned URL
+
       console.log('File to upload: ', file.name);
       console.log('URL: ', url);
 
@@ -49,7 +50,7 @@ export default function CSVFileImport({url, title}: CSVFileImportProps) {
         method: 'GET',
         url,
         params: {
-          fileName: encodeURIComponent(file.name),
+          name: encodeURIComponent(file.name),
         },
         headers: {
           Authorization: getAuthorizationToken(),
@@ -62,10 +63,12 @@ export default function CSVFileImport({url, title}: CSVFileImportProps) {
         method: 'PUT',
         body: file,
       });
+
       console.log('Result: ', result);
+      
       setFile('');
-    } catch (error: any) {
-      console.warn(`Error while uploading file: ${error}`);
+    } catch (e: any) {
+      console.warn(`Error while uploading file: ${e?.data?.message}`);
     }
   };
 
